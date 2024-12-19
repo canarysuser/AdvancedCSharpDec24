@@ -60,7 +60,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionExample.cs" />
+    <Compile Include="ThreadExample1.cs" />
+    <Compile Include="ThreadSync.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="WorkingWithResetEvents.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

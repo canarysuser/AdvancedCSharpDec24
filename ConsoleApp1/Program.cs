@@ -27,7 +27,10 @@ namespace ConsoleApp1
             //DelegatesIntroduction.Test();
             //BuiltInDelegates.Test();
             //LINQOperators.Test();
-            ReflectionExample.TestDynamicAssembly();
+            // ReflectionExample.TestDynamicAssembly();
+            //ThreadExample1.Test();
+            // ThreadSync.Test();
+            WorkingWithResetEvents.Test();
         }
         static IEnumerable<int> Power(int num, int multiplier)
         {
