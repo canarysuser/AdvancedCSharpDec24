@@ -1,0 +1,92 @@
+Multi-threading in .NET 
+- Threads are light-weight process 
+- Allocated time slices by the OS 
+- Threads are created and managed by the OS
+--> Thread LifeCycle -> Created -> Runnable -> Run -> WaitSleepJoin -> Runnable
+						   -> Aborted 	    -> Exited 
+						   -> Exited 
+
+Created State
+- OS has created a thread, TLS (Thread Local Storage), Task is associated, Schedule is created
+Runnable State (Ready State) 
+- Has a Schedule and waiting for its time slice to come up 
+Run 
+- TLS is switched onto the CPU, instructions are executed, TLS is swapped out of CPU 
+- enters the Ready state as the current time slice is completed
+WaitSleepJoin 
+- Waits for its time slice to come up 
+Abort - AbortRequested State 
+- the current running time slice is completed, further allocated time slices are removed 
+- the thread terminates or enter the exit state 
+
+- System.Threading namespace with System.Threading.Thread class 
+--> represents the OS physical thread. 
+--> The OS Creates a thread when the application wants to start or begin the execution, not when it is created or instantiated. 
+--> time slices or execution sequence cannot be guaranteed. 
+--> the thread gets its time slices 
+--> Threads run is a perfect chaotic pattern. 
+--> Thread operations can be synchronized or sequence and made inter-dependent 
+--> Threads can be fore-ground [ blocks the main thread until the spawned child thread completes]
+--> Threads can be back-ground [ Daemon threads - terminates abruptly when the main completes]
+--> Threads executes task [ function ] 
+--> Task is allocated to the thread using delegates [ ThreadStart/ParameterizedThreadStart ]
+--> ThreadPriority Enum can allocate priority for a thread starting from Highest to Lowest
+	Highest, AboveNormal, Normal, BelowNormal, Lowest  
+
+Synchronization Primitives 
+1. Object level sync 
+	- lock the object and sync access to it 
+	- Monitor sync primitive allows locking and unlocking of reference type objects 
+	- Interlocked class allows locking and unlocking of Value Types
+	- lock(object) statement is an implementation of the Monitor object 
+	- Monitor object provides methods like Enter, Exit, PulseAll, Pulse, TryEnter..... 
+2. Process-level sync 
+	- Critical sections or sync across processes 
+	- Mutex and Semaphore 
+	- Mutex - no concurrency [ only one thread can access a mutex ] 
+	- Semaphore - controlled concurrency [ restrict the number threads ]
+3. CLR level sync 
+	- MethodImplAttribute of the .NET framework which restrict access to a method 
+	- Attribute is defined in the System.Runtime.CompilerServices namespace 
+4. Thread-level Sync [ Producer-Consumer] 
+	- ResetEvents types in .NET are AutoResetEvent (signalled multiple times) and 			ManualResetEvent (only once)
+	
+
+
+Parallel Programming 
+-- divides a functionality into smaller tasks based on the number of CPUs/cores available, 
+	creates the background threads for each of the sub-tasks 
+	schedules the tasks to run on each CPU at the same time - preempts running tasks on CPUs
+	executes the tasks and runs it to completion 
+	collates the results back from all the CPUs 
+	returns the collated result to the application 
+
+--> 10,000,000 on 8 core machines 
+	1,250,000 iterations over each CPU - 8 tasks will be created, 8 threads are created 
+	each thread is assigned 
+System.Threading.Tasks namespaces
+--> Task Parallel Library (TPL) 
+--> Data Parallel Library (Parallel LINQ - PLINQ)  from item in collection.AsParallel()
+	- ConcurrentStack<T>, ConcurrentQueue<T>, ConcurrentBag<T>, BlockintCollection<T>, 
+		ConcurrentDictionary<T>
+
+-- TPL -> Parallel, Task 
+--> Parallel class has built-in implementation for creating individual tasks and executing it
+	-> Invoke(), For(), Foreach() 
+--> Task class - represents a unit of work, background threads, created using the CLRs ThreadPool.QueueUserWorkItem() method, can be started/waited upon/canceled 
+	--> tasks can also be chained and sequenced with subsequent tasks 
+	--> Tasks are scheduled for execution using the TaskScheduler (default) 
+
+Managed Extensibility Framework (MEF) 
+--> Application is composed of various "parts" [ assemblies "dll" ] 
+--> Application reads all the parts and features are enabled/disabled 
+--> System.ComponentModel.Composition.dll 
+--> CompositionContainer is a collection of various Catalog 
+--> Catalog refers to different l0cations where the dlls/parts are available
+--> "Import" parts which match the contract 
+--> "Export" contracts are implemented by the parts 
+--> if the part is composed of other parts, CompositionContainer will load the child parts.
+
+
+
+

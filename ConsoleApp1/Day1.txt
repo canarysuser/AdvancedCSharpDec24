@@ -1,0 +1,190 @@
+1. Extension Methods 
+2. yield statement 
+3. IEnumerable/IEnumerator 
+4. Lambda Expression 
+5. LINQ expression and operators 
+6. Multi-threading and Parallel programming 
+7. async await pattern 
+8. Synchronization 
+9. Reflection 
+10. Managed Extensibility Framework (MEF) 
+
+Pre-requisites 
+- VS 2022 -> Console Apps with .NET Framework 
+
+
+
+1. Extension Methods 
+
+	string email = "someone@example.com"; 
+	if( email.IsValidPattern()) { ... } 
+
+	- Open Close Design Principle 	
+	abstract class String { 
+		public abstract bool IsValidPattern(); 
+	}
+
+	class EmailString : String 
+	{
+		public override bool IsValidPattern() { 
+			return this.Contains("@"); 
+		}
+		public void Execute() { } 
+	}
+
+	void DoWork(String s) {  s.IsValidPattern(); s.Execute(); }  ==> Liskov Substitution Principle (LSP) 
+	DoWork(new EmailString())
+	DoWork(new AString()); 
+
+
+	- Generalization/Specialization relationship 
+		- child class refines the behaviors of the parent 
+		- whenever the child is instantiated, all its parent types are instantiated first.
+
+
+	class Utilities { 
+		public static bool IsValidPattern(string email) { return email.Contains("@"); } 
+	}
+	if(Utilities.IsValidPattern(email) ) 
+
+	string email = "";
+	email.Method(); { this.x = 10; ..... } 
+	Method( this: String) { ... } 
+
+ 	IsValidEmail(this string input) 
+	
+
+	-> Extension Methods should be defined within static class and the method should be marked static
+
+2. IEnumerable/IEnumerator 
+	- iterating over collections 
+--> IEnumerable -> defines a method that returns an IEnumerator instance -> GetEnumerator() 
+--> IEnumerator -> contains methods/properties to iterate over the collection 
+		   -> MoveNext(), Current prop 
+
+	foreach(var item in collection) ==> 
+	IEnumerator ie = collection.Getenumerator(); ==> IEnumerable 
+	while(ie.MoveNext()) 
+		var item = ie.Current; 
+	MoveNext() yields a value 
+
+
+Delegates and Events 
+- function pointers which stores the address of target function. 
+- first class object - can be passed as arguments to function 
+- deferred execution - dynamic polymorphism 
+- the target function signature should match with the function pointer signature 
+- faster invocation of functions
+- System.Delegate class is the function pointer in .NET 
+- Code for the class is provided at runtime by the CLR. 
+- Delegate object holds a reference to the target function address 
+- System.MulticastDelegate class -> collection or list of Delegate objects 
+	-> allows multiple invocations - one for each Delegate object in the InvocationList 
+- target function signature should match with the Delegate signature  
+- 3 steps to working with Delegates
+	1. Declaration 
+	-> declared like a function 
+	public delegate <returnType> <Ientifier>([<arg list>]); 
+	Ex: public delegate void MyDelegate(int a, int b); 
+	-> can be used to invoke functions which this pattern 
+	target function: void DoWork(int a, int b) { } 
+	COMPILER: 
+	public class MyDelegate : System.MulticastDelegate {
+		public void Invoke(BaseClass a, int b) { ...CLR...} 
+		public IAsyncResult BeginInvoke(int a, int b, AsyncCallback cb, object state) { CLR } 
+		public void EndInvoke(IAsyncResult iar) { CLR } 
+		ctor(object target, NativeInt addressOfTargetFunction) { ... CLR ... } 
+	} 
+
+	2. Instantiation 
+	-> create an instance of the delegate passing the address of the target function 
+	-> to get the address of the function, CLR uses the IL instruction LDFTN (load a function) 
+		-> IL instructions like 
+			CALL - invokes the function wrt to object method table, 
+			CALLVIRT - invokes the function wrt to the CLR VIRTUAL table (VTABLE) 
+	class A { void Fn(int a, int b) { }  } 
+	A a = new A();
+	MyDelegate md = new MyDelegate(a.Fn); 
+
+	3. Invocation 
+	- invocation like a function => md(10,20); 	= Converted to md.Invoke(10,20) by compiler 
+	- invocation like a method => md.Invoke(20,30); 
+	
+--> Supports code extensibility 
+--> implements the Strategy Design pattern 
+--> de-couple the class -> loose coupling [ events ] 
+--> Publisher-Subscriber Model (pub-sub model) events 
+
+	delegate void Del1(BaseClass a); 
+	D1 : BaseClass, D2: BaseClass 
+	Del1(D1); Del2(D2); 
+	
+	delegate void Del2<T>(T a); 
+	class A{}, B{}, C{}.... 
+	Del2<A>(new A()); Del2<B>(new B()) 
+
+
+BUilt-In delegates 
+-> WPF/WinForms/ASP.NET WebForms => public delegate void EventHandler(object sender, EventArgs e); 
+-> WPF => public delegate void RoutedEventHandler(object sender, RoutedEventArgs e); 
+
+-> Action => invoke functions that does not take arguments and returns void 
+-> Action<T1...T16> => invoke functions that takes 1-16 arguments and returns void 
+-> Func<TResult> => invokes a function that does not take argument but returns a TResult value 
+-> Func<T1...T16, TResult> => invokes a function that takes 1-16 arguments and returns TResult value
+-> Predicate<T> => takes one T type f argument and returns a bool (true/false) value 
+
+
+LINQ 
+- Language INtegrated Query 
+- Collection types 
+	- Object based Collections 
+	- DOM based Collection [ HTML ] 
+	- XML based collection 
+	- Database based collection 
+	- Document based collection 
+-- extension methods, generics, delegates, lambda expression, 
+	Object based => from item in collection select item; 
+	Database => from item in db.Entities select item; 
+	XML based => from item in dom.Elements select item; 
+
+- Query syntax 
+	-> from x in collection where condition order by something select item
+	-> deferred execution 
+	-> for executing the query, it needs to be called in foreach loop or elsewehere.
+- Method syntax 
+	-> collection.Where(predicate).OrderBy(action).Select(Func); 
+	-> immediate execution 
+
+Sets of Operators
+--> Basic Operators 
+--> Projection Operators
+--> Restriction Operators 
+--> Ordering/Sorting operators 
+--> Partition Operators 
+--> Aggregation Operators 
+--> Element operators 
+--> Quantifiers, Join, Conversion, Concatenation operators.... 
+
+
+Reflection
+- querying the types and extract type information 
+- dynamically load a type and invoking members 
+- dynamically create assemblies - at runtime - create a new assembly - IL Opcodes or System.CodeDOM
+-> Core class is System.Type -> forms a MetaClass relationship with other classes.
+-> provides information of a MemberInfo type like ConstructorInfo,FieldInfo, MethodInfo, PropertyInfo... 
+--> System.Reflection namespace 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
