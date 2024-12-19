@@ -43,6 +43,7 @@
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,10 +57,13 @@
     <Compile Include="BuiltInDelegates.cs" />
     <Compile Include="DelegatesIntroduction.cs" />
     <Compile Include="LINQOperators.cs" />
+    <Compile Include="MEFClient.cs" />
+    <Compile Include="ParallelProgramming.cs" />
     <Compile Include="ProductModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionExample.cs" />
+    <Compile Include="TaskBasedProgramming.cs" />
     <Compile Include="ThreadExample1.cs" />
     <Compile Include="ThreadSync.cs" />
     <Compile Include="Utilities.cs" />
@@ -68,6 +72,15 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MEFInterfaces\MEFInterfaces.csproj">
+      <Project>{F2ED9C78-E8E0-4292-8BC1-CC3A06D980C2}</Project>
+      <Name>MEFInterfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

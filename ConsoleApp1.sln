@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{FCDD7AC2-B91C-4B55-A036-2169CE36F9B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEFInterfaces", "MEFInterfaces\MEFInterfaces.csproj", "{F2ED9C78-E8E0-4292-8BC1-CC3A06D980C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductOperation", "ProductOperation\ProductOperation.csproj", "{994CB4C0-9B3C-4A80-9A51-7275A8969AEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{FCDD7AC2-B91C-4B55-A036-2169CE36F9B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCDD7AC2-B91C-4B55-A036-2169CE36F9B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCDD7AC2-B91C-4B55-A036-2169CE36F9B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2ED9C78-E8E0-4292-8BC1-CC3A06D980C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2ED9C78-E8E0-4292-8BC1-CC3A06D980C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2ED9C78-E8E0-4292-8BC1-CC3A06D980C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2ED9C78-E8E0-4292-8BC1-CC3A06D980C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{994CB4C0-9B3C-4A80-9A51-7275A8969AEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{994CB4C0-9B3C-4A80-9A51-7275A8969AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{994CB4C0-9B3C-4A80-9A51-7275A8969AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{994CB4C0-9B3C-4A80-9A51-7275A8969AEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

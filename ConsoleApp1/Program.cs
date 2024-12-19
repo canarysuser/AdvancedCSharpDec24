@@ -8,9 +8,17 @@ namespace ConsoleApp1
 {
     internal class Program
     {
+        static void TestMEFClient()
+        {
+            MEFClient client = new MEFClient();
+            string result = client.DataRetriever.GetData(MEFInterfaces.OperationTypes.Account);
+            Console.WriteLine("Account Result: {0}", result);
+            result = client.DataRetriever.GetData(MEFInterfaces.OperationTypes.Product);
+            Console.WriteLine("Product Result: {0}", result);
+        }
         static void Main(string[] args)
         {
-
+            TestMEFClient();
             /*string email = "someone@example.com"; 
             if(email.IsValidEmail("@")) //StringUtilities.IsValidEmail(email, pattern)
             {
@@ -30,7 +38,11 @@ namespace ConsoleApp1
             // ReflectionExample.TestDynamicAssembly();
             //ThreadExample1.Test();
             // ThreadSync.Test();
-            WorkingWithResetEvents.Test();
+            //WorkingWithResetEvents.Test();
+           // ParallelProgramming.Test();
+            //TaskBasedProgramming.Test();
+            //TaskBasedProgramming.TestTaskChains();
+            //TaskBasedProgramming.TestTaskCancellations();
         }
         static IEnumerable<int> Power(int num, int multiplier)
         {
